@@ -1,3 +1,8 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useUser } from '@/firebase';
 import {
   Card,
   CardContent,
@@ -10,8 +15,18 @@ import { BatIcon } from "@/components/icons/BatIcon";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from 'lucide-react';
 
 export default function Home() {
+  const { user, isUserLoading } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isUserLoading && !user) {
+      router.push('/login');
+    }
+  }, [user, isUserLoading, router]);
+
   const threats = [
     {
       icon: <Bug className="h-8 w-8 text-primary" />,
@@ -71,6 +86,14 @@ export default function Home() {
       question: "List one basic protective measure to improve your digital security.",
     },
   ];
+
+  if (isUserLoading || !user) {
+    return (
+      <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
+        <Loader2 className="h-16 w-16 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-16">
