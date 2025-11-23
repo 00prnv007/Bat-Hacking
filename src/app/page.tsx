@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code } from "lucide-react";
+import { BatIcon } from "@/components/icons/BatIcon";
 
 export default function Home() {
   const threats = [
@@ -52,6 +53,9 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <section className="text-center">
+        <div className="mb-4">
+          <BatIcon className="h-24 w-24 mx-auto text-primary" />
+        </div>
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-white">
           Introduction to Cybersecurity
         </h1>
