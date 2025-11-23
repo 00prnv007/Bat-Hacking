@@ -1,5 +1,13 @@
 import { BatIcon } from '@/components/icons/BatIcon';
 import LoginForm from './LoginForm';
+import AdminLoginForm from './AdminLoginForm';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import { Card } from '@/components/ui/card';
 
 export default function LoginPage() {
   return (
@@ -11,7 +19,18 @@ export default function LoginPage() {
           Enter the shadows to continue your training.
         </p>
       </div>
-      <LoginForm />
+      <Tabs defaultValue="operative" className="w-full max-w-sm">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="operative">Operative Login</TabsTrigger>
+          <TabsTrigger value="admin">Admin Login</TabsTrigger>
+        </TabsList>
+        <TabsContent value="operative">
+          <LoginForm />
+        </TabsContent>
+        <TabsContent value="admin">
+          <AdminLoginForm />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

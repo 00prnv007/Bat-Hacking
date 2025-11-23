@@ -7,12 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Shield } from 'lucide-react';
 
-export default function LoginForm() {
-  const [email, setEmail] = useState('');
+export default function AdminLoginForm() {
+  const [email, setEmail] = useState('admin@gotham.net');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const auth = useAuth();
@@ -26,20 +25,23 @@ export default function LoginForm() {
       // We are not awaiting the result here to follow the non-blocking pattern
       initiateEmailSignIn(auth, email, password);
       toast({
-        title: 'Signing in...',
+        title: 'Signing in, Administrator...',
         description: "You will be redirected shortly.",
       });
       // Redirect is handled by the auth state listener in the header
-      // or you could optimistically redirect here.
       router.push('/');
     } catch (error: any) {
-      console.error('Login Error:', error);
+      console.error('Admin Login Error:', error);
       toast({
         variant: 'destructive',
-        title: 'Login Failed',
-        description: error.message || 'An unknown error occurred.',
+        title: 'Admin Login Failed',
+        description: 'Invalid credentials or an unknown error occurred.',
       });
-      setLoading(false);
+    } finally {
+      // Don't set loading to false on success, to prevent button re-enabling during redirect
+      if(!auth.currentUser) {
+          setLoading(false);
+      }
     }
   };
 
@@ -47,42 +49,40 @@ export default function LoginForm() {
     <Card className="w-full max-w-sm border-0 shadow-none">
       <form onSubmit={handleSignIn}>
         <CardHeader className="text-center">
-          <CardTitle className="font-headline text-2xl">Operative Access</CardTitle>
+            <CardTitle className="font-headline text-2xl">Admin Access</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="admin-email">Admin Email</Label>
             <Input
-              id="email"
+              id="admin-email"
               type="email"
-              placeholder="agent@gotham.net"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              readOnly
+              className="cursor-not-allowed bg-muted"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="admin-password">Password</Label>
             <Input
-              id="password"
+              id="admin-password"
               type="password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter admin password"
             />
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Login
+            {loading ? 
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 
+              <Shield className="mr-2 h-4 w-4" />
+            }
+            Login as Admin
           </Button>
-          <p className="text-sm text-center text-muted-foreground">
-            No account?{" "}
-            <Link href="/signup" className="text-primary hover:underline">
-              Sign up
-            </Link>
-          </p>
         </CardFooter>
       </form>
     </Card>
