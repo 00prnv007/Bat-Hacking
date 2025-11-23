@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BatChristmasIcon } from '@/components/icons/BatChristmasIcon';
+import { BatIcon } from '@/components/icons/BatIcon';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
@@ -17,9 +17,9 @@ export default function Header() {
       <div className="container flex h-14 items-center">
         <div className="mr-4 flex items-center">
           <Link href="/" className="flex items-center space-x-2">
-            <BatChristmasIcon className="h-8 w-8 text-accent" />
+            <BatIcon className="h-8 w-8 text-primary" />
             <span className="hidden font-bold font-headline sm:inline-block">
-              Bat-Hacking Christmas
+              Gotham Academy
             </span>
           </Link>
         </div>
@@ -46,8 +46,8 @@ export default function Header() {
               <SheetContent side="right">
                 <div className="flex flex-col space-y-4 p-4">
                   <Link href="/" className="flex items-center space-x-2">
-                    <BatChristmasIcon className="h-6 w-6 text-accent" />
-                    <span className="font-bold">Bat-Hacking Christmas</span>
+                    <BatIcon className="h-6 w-6 text-primary" />
+                    <span className="font-bold">Gotham Academy</span>
                   </Link>
                   <nav className="flex flex-col space-y-2 mt-4">
                     {navLinks.map((link) => (

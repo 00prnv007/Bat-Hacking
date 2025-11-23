@@ -16,16 +16,16 @@ export default function Home() {
   return (
     <div className="space-y-12">
       <section className="text-center">
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl font-headline bg-clip-text text-transparent bg-gradient-to-r from-accent to-white">
-          Welcome to Bat-Hacking Christmas
+        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl font-headline bg-clip-text text-transparent bg-gradient-to-r from-primary to-white">
+          Welcome to the 🦇 Gotham Academy of Ethical Hacking 🦇
         </h1>
         <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
-          Your silent guardian in the world of ethical hacking. Explore tutorials, take on challenges, and sharpen your skills this festive season.
+          Your silent guardian in the world of ethical hacking. Explore tutorials, take on challenges, and sharpen your skills in the city's shadows.
         </p>
       </section>
 
       <section>
-        <h2 className="text-3xl font-bold font-headline mb-6">Festive Content</h2>
+        <h2 className="text-3xl font-bold font-headline mb-6">Featured Dossiers</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => {
             const image = imageMap.get(article.imageId);

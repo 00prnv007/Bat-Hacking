@@ -27,7 +27,7 @@ export default function ChallengesPage() {
           Interactive Challenges
         </h1>
         <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
-          Test your skills against these festive challenges. Each one is a step towards becoming a digital sentinel of Gotham.
+          Test your skills against these challenges. Each one is a step towards becoming a digital sentinel of Gotham.
         </p>
       </section>
 

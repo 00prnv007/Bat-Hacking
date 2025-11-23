@@ -4,74 +4,74 @@
 
 @layer base {
   :root {
-    --background: 229 69% 11%; /* #0A0F2B */
+    --background: 225 15% 9%; /* Near-black with a hint of blue */
     --foreground: 0 0% 98%;
-    --card: 232 50% 18%; /* A bit lighter than background for cards */
+    --card: 225 15% 14%; /* Slightly lighter card background */
     --card-foreground: 0 0% 98%;
-    --popover: 229 69% 11%;
+    --popover: 225 15% 9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 234 63% 30%; /* #1A237E */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 232 50% 25%;
+    --primary: 45 100% 51%; /* Gotham Gold/Yellow */
+    --primary-foreground: 225 15% 9%;
+    --secondary: 225 15% 20%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 232 50% 25%;
+    --muted: 225 15% 20%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 278 67% 38%; /* #6A20A3 */
+    --accent: 225 15% 40%; /* A steel blue accent */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 234 63% 30%;
-    --input: 232 50% 25%;
-    --ring: 278 67% 48%; /* Lighter accent */
+    --border: 225 15% 25%;
+    --input: 225 15% 20%;
+    --ring: 45 100% 51%; /* Gotham Gold/Yellow for rings */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --radius: 0.5rem;
-    --sidebar-background: 229 69% 11%;
+    --sidebar-background: 225 15% 9%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 234 63% 30%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 278 67% 38%;
+    --sidebar-primary: 45 100% 51%;
+    --sidebar-primary-foreground: 225 15% 9%;
+    --sidebar-accent: 225 15% 40%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 234 63% 30%;
-    --sidebar-ring: 278 67% 48%;
+    --sidebar-border: 225 15% 25%;
+    --sidebar-ring: 45 100% 51%;
   }
 
   .dark {
-    --background: 229 69% 11%; /* #0A0F2B */
+    --background: 225 15% 9%; /* Near-black with a hint of blue */
     --foreground: 0 0% 98%;
-    --card: 232 50% 18%;
+    --card: 225 15% 14%;
     --card-foreground: 0 0% 98%;
-    --popover: 229 69% 11%;
+    --popover: 225 15% 9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 234 63% 30%; /* #1A237E */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 232 50% 25%;
+    --primary: 45 100% 51%; /* Gotham Gold/Yellow */
+    --primary-foreground: 225 15% 9%;
+    --secondary: 225 15% 20%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 232 50% 25%;
+    --muted: 225 15% 20%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 278 67% 38%; /* #6A20A3 */
+    --accent: 225 15% 40%; /* A steel blue accent */
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 234 63% 30%;
-    --input: 232 50% 25%;
-    --ring: 278 67% 48%;
+    --border: 225 15% 25%;
+    --input: 225 15% 20%;
+    --ring: 45 100% 51%; /* Gotham Gold/Yellow for rings */
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 229 69% 11%;
+    --sidebar-background: 225 15% 9%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 234 63% 30%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 278 67% 38%;
+    --sidebar-primary: 45 100% 51%;
+    --sidebar-primary-foreground: 225 15% 9%;
+    --sidebar-accent: 225 15% 40%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 234 63% 30%;
-    --sidebar-ring: 278 67% 48%;
+    --sidebar-border: 225 15% 25%;
+    --sidebar-ring: 45 100% 51%;
   }
 }
 
@@ -81,35 +81,5 @@
   }
   body {
     @apply bg-background text-foreground;
-  }
-}
-
-@layer components {
-  .snowfall-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 1000;
-  }
-  
-  .snowflake {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    animation: fall linear infinite;
-  }
-
-  @keyframes fall {
-    0% {
-      transform: translateY(-10vh) translateX(0);
-    }
-    100% {
-      transform: translateY(110vh) translateX(var(--fall-h-end, 100px));
-    }
   }
 }
