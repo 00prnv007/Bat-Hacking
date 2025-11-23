@@ -27,6 +27,13 @@ export default function Home() {
     }
   }, [user, isUserLoading, router]);
 
+  const handleQuizSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // In the future, we can add quiz checking logic here.
+    // For now, we just prevent the page from reloading.
+    console.log("Quiz submitted!");
+  };
+
   const threats = [
     {
       icon: <Bug className="h-8 w-8 text-primary" />,
@@ -177,7 +184,7 @@ export default function Home() {
             </div>
           </CardHeader>
           <CardContent>
-            <form className="space-y-6">
+            <form className="space-y-6" onSubmit={handleQuizSubmit}>
               {quizQuestions.map((q) => (
                 <div key={q.id} className="space-y-2">
                   <Label htmlFor={q.id}>{q.question}</Label>
