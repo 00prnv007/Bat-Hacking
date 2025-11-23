@@ -10,7 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code, ShieldQuestion } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code, ShieldQuestion, HelpCircle } from "lucide-react";
 import { BatIcon } from "@/components/icons/BatIcon";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -87,6 +93,7 @@ export default function Home() {
     {
       id: "q3",
       question: "find the flag",
+      hint: "who are you",
     },
   ];
 
@@ -180,15 +187,29 @@ export default function Home() {
             </div>
           </CardHeader>
           <CardContent>
-            <form className="space-y-6" onSubmit={handleQuizSubmit}>
-              {quizQuestions.map((q) => (
-                <div key={q.id} className="space-y-2">
-                  <Label htmlFor={q.id}>{q.question}</Label>
-                  <Input id={q.id} name={q.id} placeholder="Your answer..." />
-                </div>
-              ))}
-              <Button type="submit" className="w-full">Submit Answers</Button>
-            </form>
+            <TooltipProvider>
+              <form className="space-y-6" onSubmit={handleQuizSubmit}>
+                {quizQuestions.map((q) => (
+                  <div key={q.id} className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <Label htmlFor={q.id}>{q.question}</Label>
+                      {q.hint && (
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{q.hint}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
+                    <Input id={q.id} name={q.id} placeholder="Your answer..." />
+                  </div>
+                ))}
+                <Button type="submit" className="w-full">Submit Answers</Button>
+              </form>
+            </TooltipProvider>
           </CardContent>
         </Card>
       </section>
