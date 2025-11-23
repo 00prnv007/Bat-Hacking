@@ -1,28 +1,21 @@
 /**
- * Core Philosophy: This ruleset enforces a strict user-ownership model. Each user has a
- * document in the top-level `/users` collection, and they are the only ones who can read,
- * create, update, or delete their own data. This is a foundational security posture for
- * applications requiring user accounts.
+ * Core Philosophy: This ruleset enforces a strict user-ownership model, with an
+ * exception for a designated admin role. Standard users can only access their own
+ * data. The admin user has read-only access to all user data for administrative
+ * purposes.
  *
- * Data Structure: All user-specific data is stored under the path `/users/{userId}`, where
- * the document ID `{userId}` directly corresponds to the user's Firebase Authentication UID.
- * This structure creates a secure, scalable user data silo.
+ * Data Structure: All user-specific data is stored under `/users/{userId}`, where
+ * the document ID `{userId}` corresponds to the user's Firebase Auth UID.
  *
  * Key Security Decisions:
- * - User Data Privacy: A user can only access their own document. They cannot read or even
- *   know about the existence of other users' documents.
- * - Disallowing User Listing: To prevent user enumeration attacks and protect privacy, listing
- *   the entire `/users` collection is implicitly and explicitly denied. Clients cannot query
- *   for a list of all application users.
- * - Self-Creation: A newly authenticated user is permitted to create their own user profile
- *   document, but only if the document ID matches their authentication UID.
- *
- * Denormalization for Authorization: This ruleset requires that the user document itself
- * contains an `id` field that matches the user's Auth UID. This is enforced upon creation
- * and ensures the document's internal data is consistent with its path, which is a best
- * practice for relational integrity.
- *
- * Structural Segregation: This principle is not applicable to the current simple data model.
+ * - Admin Read Access: A specific user, identified by their email 'admin@gotham.net',
+ *   is granted read-only (`get`, `list`) access to the entire `/users` collection.
+ * - User Data Privacy: A non-admin user can only access their own document. They
+ *   cannot read, update, or delete other users' documents.
+ * - Disallowing User Listing (for non-admins): To prevent user enumeration attacks,
+ *   listing the entire `/users` collection is denied for all non-admin users.
+ * - Self-Creation: A newly authenticated user can create their own user profile document,
+ *   but only if the document ID matches their authentication UID.
  */
 rules_version = '2';
 service cloud.firestore {
@@ -48,11 +41,10 @@ service cloud.firestore {
     }
 
     /**
-     * Checks for ownership on an existing document. Used for safe updates and deletes.
-     * Denies requests that target non-existent documents.
+     * Checks if the requesting user is the designated administrator by email.
      */
-    function isExistingOwner(userId) {
-      return isOwner(userId) && resource != null;
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == 'admin@gotham.net';
     }
 
     /**
@@ -75,21 +67,20 @@ service cloud.firestore {
     // ------------------------------------------------------------------------
 
     /**
-     * @description Controls access to a user's own profile document.
+     * @description Controls access to user profile documents.
      * @path        /users/{userId}
-     * @allow       (get, update, delete) An authenticated user with UID 'user_abc' accessing their own document at `/users/user_abc`.
-     * @allow       (create) A new user with UID 'user_xyz' creating their profile at `/users/user_xyz` with `{ "id": "user_xyz", "username": "batman" }`.
-     * @deny        (get) User 'user_abc' attempting to read `/users/user_xyz`.
-     * @deny        (list) Any user attempting to list all documents in the `/users` collection.
-     * @deny        (create) User 'user_abc' attempting to create a profile for 'user_xyz' at `/users/user_xyz`.
-     * @principle   Restricts access to a user's own data tree and validates relational integrity.
+     * @allow       (get, update, delete) An authenticated user on their own document.
+     * @allow       (create) A new user creating their own profile.
+     * @allow       (get, list) The designated admin user.
+     * @deny        (get, list, update, delete) Any non-admin user on another user's document.
+     * @principle   Restricts data access to owners, with a read-only exception for admins.
      */
     match /users/{userId} {
-      allow get: if isOwner(userId);
-      allow list: if false; // CRITICAL: Explicitly deny listing on the users collection to prevent user enumeration.
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isAdmin();
       allow create: if isCreatingOwnProfile(userId);
-      allow update: if isExistingOwner(userId) && isImmutableId();
-      allow delete: if isExistingOwner(userId);
+      allow update: if isOwner(userId) && isImmutableId();
+      allow delete: if isOwner(userId);
     }
   }
 }

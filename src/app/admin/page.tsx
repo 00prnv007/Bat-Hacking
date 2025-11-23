@@ -2,16 +2,32 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/firebase';
-import { Loader2, ShieldCheck } from 'lucide-react';
+import { useUser, useCollection, useMemoFirebase } from '@/firebase';
+import { Loader2, ShieldCheck, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useFirestore } from '@/firebase/provider';
+import { collection } from 'firebase/firestore';
 
 export default function AdminPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
+  const firestore = useFirestore();
+
+  const usersCollection = useMemoFirebase(
+    () => (firestore ? collection(firestore, 'users') : null),
+    [firestore]
+  );
+  const { data: users, isLoading: usersLoading } = useCollection(usersCollection);
 
   useEffect(() => {
-    // If not loading and user is not present, or user is not admin, redirect
     if (!isUserLoading) {
       if (!user || user.email !== 'admin@gotham.net') {
         router.push('/');
@@ -19,7 +35,6 @@ export default function AdminPage() {
     }
   }, [user, isUserLoading, router]);
 
-  // Show a loading state while we verify the user
   if (isUserLoading || !user || user.email !== 'admin@gotham.net') {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
@@ -28,7 +43,6 @@ export default function AdminPage() {
     );
   }
 
-  // If we reach here, the user is the admin
   return (
     <div className="space-y-8">
       <section className="text-center">
@@ -43,11 +57,45 @@ export default function AdminPage() {
 
       <section className="max-w-4xl mx-auto">
         <Card>
-          <CardHeader>
-            <CardTitle>System Status</CardTitle>
+          <CardHeader className="flex flex-row items-center gap-4">
+            <Users className="h-6 w-6" />
+            <CardTitle>Registered Operatives</CardTitle>
           </CardHeader>
           <CardContent>
-            <p>All systems are operational. The shadows remain secure.</p>
+            {usersLoading ? (
+              <div className="flex justify-center items-center h-40">
+                <Loader2 className="h-8 w-8 animate-spin text-primary" />
+              </div>
+            ) : (
+              <div className="rounded-lg border">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Username</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>User ID</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {users && users.length > 0 ? (
+                      users.map((op) => (
+                        <TableRow key={op.id}>
+                          <TableCell className="font-medium">{op.username}</TableCell>
+                          <TableCell>{op.email}</TableCell>
+                          <TableCell className="font-code text-xs">{op.id}</TableCell>
+                        </TableRow>
+                      ))
+                    ) : (
+                      <TableRow>
+                        <TableCell colSpan={3} className="text-center">
+                          No operatives have registered yet.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
           </CardContent>
         </Card>
       </section>
