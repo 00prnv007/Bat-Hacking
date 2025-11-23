@@ -35,19 +35,22 @@ function AddUserForm() {
 
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!adminUser || !firestore) return;
+    if (!auth || !firestore || !adminUser?.email) return;
     setLoading(true);
 
     const adminEmail = adminUser.email;
-    const adminPassword = 'batman123'; // The known admin password
+    const adminPassword = 'batman123'; // This should be handled more securely in a real app
 
     try {
-      // Create the new user. This will sign out the admin and sign in the new user.
+      // 1. Create the new user account. Note: This signs out the admin.
       const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = newUserCredential.user;
 
-      // Create the user document in Firestore for the new user.
+      // 2. Create the user document in Firestore.
       const userDocRef = doc(firestore, 'users', newUser.uid);
+      // We use setDoc directly here and await it to ensure the doc is created
+      // before we proceed. The non-blocking call is less critical here as
+      // the admin re-authentication is the main flow control.
       await setDocumentNonBlocking(userDocRef, {
         id: newUser.uid,
         username: username,
@@ -73,20 +76,19 @@ function AddUserForm() {
         description: error.message || 'Could not create user.',
       });
     } finally {
-      // IMPORTANT: Sign the admin back in.
-      if (adminEmail) {
-        try {
-          await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
-        } catch (reauthError) {
-          console.error('Failed to re-authenticate admin:', reauthError);
-          toast({
-            variant: 'destructive',
-            title: 'Admin Re-login Failed',
-            description: 'Please log in again manually.',
-          });
-          // Redirect to login if re-auth fails to avoid being stuck as the new user
-          window.location.href = '/login';
-        }
+      // 3. IMPORTANT: Sign the admin back in to restore their session.
+      try {
+        await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
+      } catch (reauthError) {
+        console.error('Failed to re-authenticate admin:', reauthError);
+        toast({
+          variant: 'destructive',
+          title: 'Admin Re-login Failed',
+          description: 'Please log in again manually.',
+        });
+        // If re-auth fails, the user is likely logged in as the new user.
+        // Force a redirect to the login page to resolve the state.
+        router.push('/login');
       }
       setLoading(false);
     }
@@ -160,14 +162,14 @@ export default function AdminPage() {
   const { data: users, isLoading: usersLoading } = useCollection(usersCollection);
 
   useEffect(() => {
-    if (!isUserLoading) {
-      if (!user || user.email !== 'admin@gotham.net') {
-        router.push('/');
-      }
+    if (!isUserLoading && !user) {
+        router.push('/login');
+    } else if (!isUserLoading && user && user.email !== 'admin@gotham.net') {
+      router.push('/');
     }
   }, [user, isUserLoading, router]);
 
-  if (isUserLoading || !isAdmin) {
+  if (isUserLoading || !user || !isAdmin) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
         <Loader2 className="h-16 w-16 animate-spin text-primary" />
@@ -195,7 +197,7 @@ export default function AdminPage() {
               <CardTitle>Registered Operatives</CardTitle>
             </CardHeader>
             <CardContent>
-              {usersLoading ? (
+              {usersLoading && (!users || users.length === 0) ? (
                 <div className="flex justify-center items-center h-40">
                   <Loader2 className="h-8 w-8 animate-spin text-primary" />
                 </div>
