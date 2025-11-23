@@ -41,14 +41,16 @@ function AddUserForm() {
     setLoading(true);
 
     const adminEmail = adminUser.email;
-    const adminPassword = 'batman123'; // This should be handled more securely in a real app
+    // This is insecure and only for the CTF challenge.
+    // A real app should NEVER store or handle passwords like this.
+    const adminPassword = 'batman123'; 
 
     try {
-      // 1. Create the new user account. Note: This signs out the admin.
+      // 1. Create the new user account. This temporarily signs out the admin.
       const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = newUserCredential.user;
 
-      // 2. Create the user document in Firestore.
+      // 2. Create the user document in Firestore, including the MD5 hash.
       const userDocRef = doc(firestore, 'users', newUser.uid);
       const passwordHash = CryptoJS.MD5(password).toString();
 
@@ -56,7 +58,7 @@ function AddUserForm() {
         id: newUser.uid,
         username: username,
         email: newUser.email,
-        passwordHash: passwordHash,
+        passwordHash: passwordHash, // Storing the hash
         createdAt: serverTimestamp(),
       }, { merge: true });
 
@@ -88,8 +90,7 @@ function AddUserForm() {
           title: 'Admin Re-login Failed',
           description: 'Please log in again manually.',
         });
-        // If re-auth fails, the user is likely logged in as the new user.
-        // Force a redirect to the login page to resolve the state.
+        // If re-auth fails, force a redirect to the login page to resolve the state.
         router.push('/login');
       }
       setLoading(false);
@@ -166,10 +167,10 @@ export default function AdminPage() {
   useEffect(() => {
     if (!isUserLoading && !user) {
         router.push('/login');
-    } else if (!isUserLoading && user && user.email !== 'admin@gotham.net') {
+    } else if (!isUserLoading && user && !isAdmin) {
       router.push('/');
     }
-  }, [user, isUserLoading, router]);
+  }, [user, isUserLoading, router, isAdmin]);
 
   if (isUserLoading || !user || !isAdmin) {
     return (
@@ -215,7 +216,7 @@ export default function AdminPage() {
                     </TableHeader>
                     <TableBody>
                       {users && users.length > 0 ? (
-                        users.map((op) => (
+                        users.map((op: any) => (
                           <TableRow key={op.id}>
                             <TableCell className="font-medium">{op.username}</TableCell>
                             <TableCell>{op.email}</TableCell>
