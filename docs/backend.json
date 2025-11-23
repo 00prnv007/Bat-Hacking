@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user account for the Bat-Hacking Christmas website.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user entity."
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's chosen username for login and display."
+        }
+      },
+      "required": [
+        "id",
+        "username"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user account information. Path-based ownership ensures only the authenticated user (or an admin) can access their own data. Includes the 'username'.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier for the user, obtained from Firebase Authentication (request.auth.uid)."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "This design prioritizes security and scalability for the 'Bat-Hacking Christmas' application. It focuses on authorization independence and clarity. User data is stored under `/users/{userId}`. This allows for simple ownership-based security rules. Usernames are stored as an attribute of the user document. This design avoids complex `get()` calls in security rules, ensuring atomicity of operations. Since this application needs login, authorization is required to display sensitive information. The database-centric authentication (DBAC) approach is adopted; i.e., users are authenticated using Firebase Authentication, and all permissions are derived from their existence as a user and their roles in the database."
+  }
+}
