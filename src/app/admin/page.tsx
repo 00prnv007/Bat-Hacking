@@ -21,6 +21,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import CryptoJS from 'crypto-js';
 
 
 function AddUserForm() {
@@ -32,6 +33,7 @@ function AddUserForm() {
   const firestore = useFirestore();
   const { toast } = useToast();
   const { user: adminUser } = useUser();
+  const router = useRouter();
 
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,13 +50,13 @@ function AddUserForm() {
 
       // 2. Create the user document in Firestore.
       const userDocRef = doc(firestore, 'users', newUser.uid);
-      // We use setDoc directly here and await it to ensure the doc is created
-      // before we proceed. The non-blocking call is less critical here as
-      // the admin re-authentication is the main flow control.
+      const passwordHash = CryptoJS.MD5(password).toString();
+
       await setDocumentNonBlocking(userDocRef, {
         id: newUser.uid,
         username: username,
         email: newUser.email,
+        passwordHash: passwordHash,
         createdAt: serverTimestamp(),
       }, { merge: true });
 
@@ -208,6 +210,7 @@ export default function AdminPage() {
                       <TableRow>
                         <TableHead>Username</TableHead>
                         <TableHead>Email</TableHead>
+                        <TableHead>Password (MD5)</TableHead>
                         <TableHead>User ID</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -217,12 +220,13 @@ export default function AdminPage() {
                           <TableRow key={op.id}>
                             <TableCell className="font-medium">{op.username}</TableCell>
                             <TableCell>{op.email}</TableCell>
+                            <TableCell className="font-code text-xs">{op.passwordHash}</TableCell>
                             <TableCell className="font-code text-xs">{op.id}</TableCell>
                           </TableRow>
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={3} className="text-center">
+                          <TableCell colSpan={4} className="text-center">
                             No operatives have registered yet.
                           </TableCell>
                         </TableRow>

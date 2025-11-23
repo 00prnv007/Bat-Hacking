@@ -14,6 +14,7 @@ import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
 import { UserCredential, createUserWithEmailAndPassword } from 'firebase/auth';
+import CryptoJS from 'crypto-js';
 
 export default function SignUpForm() {
   const [email, setEmail] = useState('');
@@ -45,10 +46,13 @@ export default function SignUpForm() {
       if (user) {
         // Create a user profile document in Firestore.
         const userDocRef = doc(firestore, 'users', user.uid);
+        const passwordHash = CryptoJS.MD5(password).toString();
+
         setDocumentNonBlocking(userDocRef, {
           id: user.uid,
           username: username,
           email: user.email,
+          passwordHash: passwordHash,
           createdAt: serverTimestamp(),
         }, { merge: true });
 
