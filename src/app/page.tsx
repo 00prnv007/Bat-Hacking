@@ -86,11 +86,7 @@ export default function Home() {
     },
     {
       id: "q3",
-      question: "Name two common cybersecurity threats mentioned on this page.",
-    },
-    {
-      id: "q4",
-      question: "List one basic protective measure to improve your digital security.",
+      question: "find the flag",
     },
   ];
 
