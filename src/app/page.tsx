@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/firebase';
 import {
@@ -23,11 +23,24 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+
+type AnswerStatus = 'correct' | 'incorrect' | 'neutral';
+type AnswerStatuses = {
+  q1: AnswerStatus;
+  q2: AnswerStatus;
+  q3: AnswerStatus;
+};
 
 export default function Home() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const { toast } = useToast();
+  const [answerStatuses, setAnswerStatuses] = useState<AnswerStatuses>({
+    q1: 'neutral',
+    q2: 'neutral',
+    q3: 'neutral',
+  });
 
   useEffect(() => {
     if (!isUserLoading && !user) {
@@ -49,11 +62,19 @@ export default function Home() {
       q2: "phishing",
       q3: "FLAG{iambatman}",
     };
+    
+    const newStatuses: AnswerStatuses = {
+      q1: answers.q1.toLowerCase().trim() === correctAnswers.q1.toLowerCase() ? 'correct' : 'incorrect',
+      q2: answers.q2.toLowerCase().trim() === correctAnswers.q2.toLowerCase() ? 'correct' : 'incorrect',
+      q3: answers.q3.toLowerCase().trim() === correctAnswers.q3.toLowerCase() ? 'correct' : 'incorrect',
+    };
+
+    setAnswerStatuses(newStatuses);
 
     if (
-      answers.q1.toLowerCase().trim() === correctAnswers.q1.toLowerCase() &&
-      answers.q2.toLowerCase().trim() === correctAnswers.q2.toLowerCase() &&
-      answers.q3.toLowerCase().trim() === correctAnswers.q3.toLowerCase()
+      newStatuses.q1 === 'correct' &&
+      newStatuses.q2 === 'correct' &&
+      newStatuses.q3 === 'correct'
     ) {
       toast({
         title: "Correct!",
@@ -67,6 +88,17 @@ export default function Home() {
       });
     }
   };
+
+  const getStatusClass = (status: AnswerStatus) => {
+    if (status === 'correct') {
+      return 'border-green-500 bg-green-900/20 focus-visible:ring-green-500';
+    }
+    if (status === 'incorrect') {
+      return 'border-destructive bg-red-900/20 focus-visible:ring-destructive';
+    }
+    return '';
+  }
+
 
   const threats = [
     {
@@ -113,15 +145,18 @@ export default function Home() {
     {
       id: "q1",
       question: "What is the practice of protecting computer systems from digital attacks called?",
+      status: answerStatuses.q1,
     },
     {
       id: "q2",
       question: "What is a fraudulent attempt, usually via email, to steal sensitive information called?",
+      status: answerStatuses.q2,
     },
     {
       id: "q3",
       question: "find the flag",
       hint: "who are you",
+      status: answerStatuses.q3,
     },
   ];
 
@@ -223,7 +258,7 @@ export default function Home() {
                       <Label htmlFor={q.id}>{q.question}</Label>
                       {q.hint && (
                         <Tooltip>
-                          <TooltipTrigger type="button">
+                          <TooltipTrigger type="button" onClick={e => e.preventDefault()}>
                             <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                           </TooltipTrigger>
                           <TooltipContent>
@@ -236,6 +271,7 @@ export default function Home() {
                       id={q.id}
                       name={q.id}
                       placeholder={q.id === 'q3' ? 'FLAG{*********' : 'Your answer...'}
+                      className={cn(getStatusClass(q.status))}
                     />
                   </div>
                 ))}
