@@ -204,7 +204,11 @@ export default function Home() {
                         </Tooltip>
                       )}
                     </div>
-                    <Input id={q.id} name={q.id} placeholder="Your answer..." />
+                    <Input
+                      id={q.id}
+                      name={q.id}
+                      placeholder={q.id === 'q3' ? 'FLAG{*********' : 'Your answer...'}
+                    />
                   </div>
                 ))}
                 <Button type="submit" className="w-full">Submit Answers</Button>
