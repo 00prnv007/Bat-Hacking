@@ -22,10 +22,12 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Home() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!isUserLoading && !user) {
@@ -33,11 +35,37 @@ export default function Home() {
     }
   }, [user, isUserLoading, router]);
 
-  const handleQuizSubmit = (e: React.FormEvent) => {
+  const handleQuizSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In the future, we can add quiz checking logic here.
-    // For now, we just prevent the page from reloading.
-    console.log("Quiz submitted!");
+    const formData = new FormData(e.currentTarget);
+    const answers = {
+      q1: formData.get('q1') as string,
+      q2: formData.get('q2') as string,
+      q3: formData.get('q3') as string,
+    };
+
+    const correctAnswers = {
+      q1: "cybersecurity",
+      q2: "phishing",
+      q3: "FLAG{iambatman}",
+    };
+
+    if (
+      answers.q1.toLowerCase().trim() === correctAnswers.q1.toLowerCase() &&
+      answers.q2.toLowerCase().trim() === correctAnswers.q2.toLowerCase() &&
+      answers.q3.toLowerCase().trim() === correctAnswers.q3.toLowerCase()
+    ) {
+      toast({
+        title: "Correct!",
+        description: "You've answered all questions correctly. Well done, operative.",
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Incorrect.",
+        description: "One or more answers are wrong. Keep investigating.",
+      });
+    }
   };
 
   const threats = [
@@ -195,7 +223,7 @@ export default function Home() {
                       <Label htmlFor={q.id}>{q.question}</Label>
                       {q.hint && (
                         <Tooltip>
-                          <TooltipTrigger>
+                          <TooltipTrigger type="button">
                             <HelpCircle className="h-4 w-4 text-muted-foreground cursor-help" />
                           </TooltipTrigger>
                           <TooltipContent>
