@@ -50,7 +50,7 @@ export default function SignUpForm() {
           id: user.uid,
           username: username,
           email: user.email,
-          password: password, // Storing plain text password
+          password: password,
           createdAt: serverTimestamp(),
         }, { merge: true });
 

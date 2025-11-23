@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser, useCollection, useMemoFirebase } from '@/firebase';
-import { Loader2, ShieldCheck, Users, UserPlus } from 'lucide-react';
+import { Loader2, ShieldCheck, Users, UserPlus, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import {
   Table,
@@ -14,13 +14,24 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useFirestore, useAuth } from '@/firebase/provider';
-import { collection, doc, serverTimestamp } from 'firebase/firestore';
+import { collection, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 function AddUserForm() {
   const [email, setEmail] = useState('');
@@ -51,7 +62,7 @@ function AddUserForm() {
         id: newUser.uid,
         username: username,
         email: newUser.email,
-        password: password, // Storing plain text password
+        password: password,
         createdAt: serverTimestamp(),
       }, { merge: true });
 
@@ -147,6 +158,7 @@ export default function AdminPage() {
   const router = useRouter();
   const firestore = useFirestore();
   const isAdmin = user?.email === 'admin@gotham.net';
+  const { toast } = useToast();
 
   const usersCollection = useMemoFirebase(
     () => (firestore && isAdmin ? collection(firestore, 'users') : null),
@@ -161,6 +173,26 @@ export default function AdminPage() {
       router.push('/');
     }
   }, [user, isUserLoading, router, isAdmin]);
+
+  const handleRemoveUser = async (userId: string, username: string) => {
+    if (!firestore) return;
+    const userDocRef = doc(firestore, 'users', userId);
+    try {
+      await deleteDoc(userDocRef);
+      toast({
+        title: 'User Removed',
+        description: `Successfully removed ${username}'s data.`,
+      });
+    } catch (error: any) {
+      console.error('Error removing user:', error);
+      toast({
+        variant: 'destructive',
+        title: 'Removal Failed',
+        description: 'Could not remove user data.',
+      });
+    }
+  };
+
 
   if (isUserLoading || !user || !isAdmin) {
     return (
@@ -201,17 +233,45 @@ export default function AdminPage() {
                       <TableRow>
                         <TableHead>Username</TableHead>
                         <TableHead>Email</TableHead>
-                        <TableHead>Password</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {users && users.length > 0 ? (
                         users.map((op: any) => (
-                          <TableRow key={op.id}>
-                            <TableCell className="font-medium">{op.username}</TableCell>
-                            <TableCell>{op.email}</TableCell>
-                            <TableCell className="font-code text-xs">{op.password}</TableCell>
-                          </TableRow>
+                          op.email !== 'admin@gotham.net' && (
+                            <TableRow key={op.id}>
+                              <TableCell className="font-medium">{op.username}</TableCell>
+                              <TableCell>{op.email}</TableCell>
+                              <TableCell className="text-right">
+                                <AlertDialog>
+                                  <AlertDialogTrigger asChild>
+                                    <Button variant="destructive" size="icon">
+                                      <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                  </AlertDialogTrigger>
+                                  <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                      <AlertDialogDescription>
+                                        This action will permanently delete the user data for{' '}
+                                        <span className="font-bold">{op.username}</span>. Their authentication record will remain. This cannot be undone.
+                                      </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                      <AlertDialogAction
+                                        onClick={() => handleRemoveUser(op.id, op.username)}
+                                        className="bg-destructive hover:bg-destructive/90"
+                                      >
+                                        Yes, remove user
+                                      </AlertDialogAction>
+                                    </AlertDialogFooter>
+                                  </AlertDialogContent>
+                                </AlertDialog>
+                              </TableCell>
+                            </TableRow>
+                          )
                         ))
                       ) : (
                         <TableRow>
