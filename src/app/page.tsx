@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ShieldCheck, Bug, WifiOff, KeyRound } from "lucide-react";
+import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code } from "lucide-react";
 
 export default function Home() {
   const threats = [
@@ -23,6 +23,21 @@ export default function Home() {
       icon: <WifiOff className="h-8 w-8 text-primary" />,
       title: "Denial-of-Service (DoS) Attacks",
       description: "Overwhelming a system's resources to make it unavailable to its intended users.",
+    },
+    {
+      icon: <Shuffle className="h-8 w-8 text-primary" />,
+      title: "Man-in-the-Middle (MitM)",
+      description: "An attacker secretly intercepts and alters communications between two parties who believe they are directly communicating with each other.",
+    },
+    {
+      icon: <Database className="h-8 w-8 text-primary" />,
+      title: "SQL Injection",
+      description: "A malicious SQL query is inserted into an application's input, allowing an attacker to control the application's database.",
+    },
+    {
+      icon: <Code className="h-8 w-8 text-primary" />,
+      title: "Cross-Site Scripting (XSS)",
+      description: "Injecting malicious scripts into trusted websites, which then execute on a victim's browser, stealing data or performing actions.",
     },
   ];
 
