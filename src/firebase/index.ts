@@ -2,8 +2,8 @@
 
 import { firebaseConfig } from '@/firebase/config';
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore'
+import { Auth, getAuth } from 'firebase/auth';
+import { Firestore, getFirestore } from 'firebase/firestore'
 
 // IMPORTANT: DO NOT MODIFY THIS FUNCTION
 export function initializeFirebase() {
@@ -33,10 +33,13 @@ export function initializeFirebase() {
 }
 
 export function getSdks(firebaseApp: FirebaseApp) {
+  const auth = getAuth(firebaseApp);
+  const firestore = getFirestore(firebaseApp);
+
   return {
     firebaseApp,
-    auth: getAuth(firebaseApp),
-    firestore: getFirestore(firebaseApp)
+    auth,
+    firestore,
   };
 }
 
@@ -48,3 +51,31 @@ export * from './non-blocking-updates';
 export * from './non-blocking-login';
 export * from './errors';
 export * from './error-emitter';
+
+// Add these functions for creating user documents
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore';
+
+export async function createUserProfileDocument(user: any, additionalData: object) {
+  if (!user) return;
+  const firestore = getFirestore();
+  const userRef = doc(firestore, `users/${user.uid}`);
+  const snapshot = await userRef.get();
+
+  if (!snapshot.exists()) {
+    const { email } = user;
+    const createdAt = new Date();
+    try {
+      await setDoc(userRef, {
+        email,
+        createdAt,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.error('Error creating user document', error);
+    }
+  }
+  return userRef;
+}
+
+// Re-export Auth for convenience
+export type { Auth };
