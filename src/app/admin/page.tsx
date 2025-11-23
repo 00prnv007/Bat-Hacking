@@ -21,8 +21,6 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
-import CryptoJS from 'crypto-js';
-
 
 function AddUserForm() {
   const [email, setEmail] = useState('');
@@ -41,24 +39,19 @@ function AddUserForm() {
     setLoading(true);
 
     const adminEmail = adminUser.email;
-    // This is insecure and only for the CTF challenge.
-    // A real app should NEVER store or handle passwords like this.
     const adminPassword = 'batman123'; 
 
     try {
-      // 1. Create the new user account. This temporarily signs out the admin.
       const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = newUserCredential.user;
 
-      // 2. Create the user document in Firestore, including the MD5 hash.
       const userDocRef = doc(firestore, 'users', newUser.uid);
-      const passwordHash = CryptoJS.MD5(password).toString();
 
       await setDocumentNonBlocking(userDocRef, {
         id: newUser.uid,
         username: username,
         email: newUser.email,
-        passwordHash: passwordHash, // Storing the hash
+        password: password, // Storing plain text password
         createdAt: serverTimestamp(),
       }, { merge: true });
 
@@ -67,7 +60,6 @@ function AddUserForm() {
         description: `Successfully created user ${username}.`,
       });
 
-      // Clear form
       setUsername('');
       setEmail('');
       setPassword('');
@@ -80,7 +72,6 @@ function AddUserForm() {
         description: error.message || 'Could not create user.',
       });
     } finally {
-      // 3. IMPORTANT: Sign the admin back in to restore their session.
       try {
         await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
       } catch (reauthError) {
@@ -90,7 +81,6 @@ function AddUserForm() {
           title: 'Admin Re-login Failed',
           description: 'Please log in again manually.',
         });
-        // If re-auth fails, force a redirect to the login page to resolve the state.
         router.push('/login');
       }
       setLoading(false);
@@ -211,7 +201,7 @@ export default function AdminPage() {
                       <TableRow>
                         <TableHead>Username</TableHead>
                         <TableHead>Email</TableHead>
-                        <TableHead>Password (MD5)</TableHead>
+                        <TableHead>Password</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -220,7 +210,7 @@ export default function AdminPage() {
                           <TableRow key={op.id}>
                             <TableCell className="font-medium">{op.username}</TableCell>
                             <TableCell>{op.email}</TableCell>
-                            <TableCell className="font-code text-xs">{op.passwordHash}</TableCell>
+                            <TableCell className="font-code text-xs">{op.password}</TableCell>
                           </TableRow>
                         ))
                       ) : (
