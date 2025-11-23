@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2 } from 'lucide-react';
-import { UserCredential } from 'firebase/auth';
+import { UserCredential, createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function SignUpForm() {
   const [email, setEmail] = useState('');
@@ -39,7 +39,7 @@ export default function SignUpForm() {
 
     try {
       // Create user with email and password.
-      const userCredential: UserCredential = await auth.createUserWithEmailAndPassword(email, password);
+      const userCredential: UserCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
       if (user) {
