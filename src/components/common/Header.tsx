@@ -6,9 +6,6 @@ import { Menu } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/challenges', label: 'Challenges' },
-  { href: '/forum', label: 'Forum' },
-  { href: '/recommendations', label: 'AI Tools' },
 ];
 
 export default function Header() {
