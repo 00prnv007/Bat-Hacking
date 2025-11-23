@@ -1,3 +1,40 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "1",
+      "description": "A computer screen showing network data packets.",
+      "imageUrl": "https://images.unsplash.com/photo-1506399309177-3b43e99fead2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZXR3b3JrJTIwZGF0YXxlbnwwfHx8fDE3NjM4MzQxMjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "network data"
+    },
+    {
+      "id": "2",
+      "description": "A lock with binary code in the background.",
+      "imageUrl": "https://images.unsplash.com/photo-1697382608786-bcf4c113b86e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwYXNzd29yZCUyMGxvY2t8ZW58MHx8fHwxNzYzODk0MjEzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "password lock"
+    },
+    {
+      "id": "3",
+      "description": "A computer screen with code and a shield icon.",
+      "imageUrl": "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHx3ZWIlMjBzZWN1cml0eXxlbnwwfHx8fDE3NjM5MDcyNzl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "web security"
+    },
+    {
+      "id": "4",
+      "description": "A complex dashboard with graphs and data.",
+      "imageUrl": "https://images.unsplash.com/photo-1709547228697-fa1f424a3f39?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxoYWNrZXIlMjBkYXNoYm9hcmR8ZW58MHx8fHwxNzYzOTA3Mjc5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "hacker dashboard"
+    },
+    {
+      "id": "5",
+      "description": "Wi-Fi signals radiating from an antenna.",
+      "imageUrl": "https://images.unsplash.com/photo-1597432683665-4988f859868f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3aWZpJTIwc2lnbmFsfGVufDB8fHx8MTc2Mzg1OTQ5MXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "wifi signal"
+    },
+    {
+      "id": "6",
+      "description": "A group of people with interconnected lines.",
+      "imageUrl": "https://images.unsplash.com/photo-1573152143286-0c422b4d2175?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxzb2NpYWwlMjBuZXR3b3JrfGVufDB8fHx8MTc2Mzg0MjczNHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "social network"
+    }
+  ]
 }
