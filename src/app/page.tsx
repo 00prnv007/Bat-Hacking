@@ -16,7 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code, ShieldQuestion, HelpCircle } from "lucide-react";
+import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code, ShieldQuestion, HelpCircle, Check, X } from "lucide-react";
 import { BatIcon } from "@/components/icons/BatIcon";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -267,12 +267,20 @@ export default function Home() {
                         </Tooltip>
                       )}
                     </div>
-                    <Input
-                      id={q.id}
-                      name={q.id}
-                      placeholder={q.id === 'q3' ? 'FLAG{*********' : 'Your answer...'}
-                      className={cn(getStatusClass(q.status))}
-                    />
+                    <div className="relative">
+                      <Input
+                        id={q.id}
+                        name={q.id}
+                        placeholder={q.id === 'q3' ? 'FLAG{*********' : 'Your answer...'}
+                        className={cn(getStatusClass(q.status), 'pr-10')}
+                      />
+                      {q.status === 'correct' && (
+                        <Check className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-green-500" />
+                      )}
+                      {q.status === 'incorrect' && (
+                        <X className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-destructive" />
+                      )}
+                    </div>
                   </div>
                 ))}
                 <Button type="submit" className="w-full">Submit Answers</Button>
