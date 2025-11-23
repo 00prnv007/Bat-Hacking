@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { BatIcon } from '@/components/icons/BatIcon';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { LogIn, LogOut, Menu, User as UserIcon } from 'lucide-react';
+import { LogIn, LogOut, Menu, User as UserIcon, Shield } from 'lucide-react';
 import { useUser } from '@/firebase';
 import { getAuth } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
@@ -38,6 +38,8 @@ export default function Header() {
     return email.substring(0, 2).toUpperCase();
   };
 
+  const isAdmin = user && user.email === 'admin@gotham.net';
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary/20 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
@@ -59,6 +61,14 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
+          {isAdmin && (
+             <Link
+              href="/admin"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Admin Panel
+            </Link>
+          )}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
           {!isUserLoading && (
@@ -82,6 +92,12 @@ export default function Header() {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
+                  {isAdmin && (
+                    <DropdownMenuItem onClick={() => router.push('/admin')}>
+                      <Shield className="mr-2 h-4 w-4" />
+                      <span>Admin Panel</span>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem onClick={handleLogout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Log out</span>
@@ -121,6 +137,14 @@ export default function Header() {
                         {link.label}
                       </Link>
                     ))}
+                     {isAdmin && (
+                      <Link
+                        href="/admin"
+                        className="text-lg font-medium transition-colors hover:text-accent"
+                      >
+                        Admin Panel
+                      </Link>
+                    )}
                   </nav>
                 </div>
               </SheetContent>
