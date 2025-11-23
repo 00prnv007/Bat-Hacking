@@ -151,10 +151,11 @@ export default function AdminPage() {
   const { user, isUserLoading } = useUser();
   const router = useRouter();
   const firestore = useFirestore();
+  const isAdmin = user?.email === 'admin@gotham.net';
 
   const usersCollection = useMemoFirebase(
-    () => (firestore ? collection(firestore, 'users') : null),
-    [firestore]
+    () => (firestore && isAdmin ? collection(firestore, 'users') : null),
+    [firestore, isAdmin]
   );
   const { data: users, isLoading: usersLoading } = useCollection(usersCollection);
 
@@ -166,7 +167,7 @@ export default function AdminPage() {
     }
   }, [user, isUserLoading, router]);
 
-  if (isUserLoading || !user || user.email !== 'admin@gotham.net') {
+  if (isUserLoading || !isAdmin) {
     return (
       <div className="flex items-center justify-center min-h-[calc(100vh-200px)]">
         <Loader2 className="h-16 w-16 animate-spin text-primary" />
