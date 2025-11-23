@@ -16,7 +16,7 @@ export default function Header() {
           <Link href="/" className="flex items-center space-x-2">
             <BatIcon className="h-8 w-8 text-primary" />
             <span className="hidden font-bold font-headline sm:inline-block">
-              Gotham Academy
+              🦇 Gotham Academy 🦇
             </span>
           </Link>
         </div>
@@ -44,7 +44,7 @@ export default function Header() {
                 <div className="flex flex-col space-y-4 p-4">
                   <Link href="/" className="flex items-center space-x-2">
                     <BatIcon className="h-6 w-6 text-primary" />
-                    <span className="font-bold">Gotham Academy</span>
+                    <span className="font-bold">🦇 Gotham Academy 🦇</span>
                   </Link>
                   <nav className="flex flex-col space-y-2 mt-4">
                     {navLinks.map((link) => (
