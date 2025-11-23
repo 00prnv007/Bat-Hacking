@@ -5,8 +5,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code } from "lucide-react";
+import { ShieldCheck, Bug, WifiOff, KeyRound, Shuffle, Database, Code, ShieldQuestion } from "lucide-react";
 import { BatIcon } from "@/components/icons/BatIcon";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const threats = [
@@ -48,6 +51,25 @@ export default function Home() {
     "Be cautious of suspicious emails, links, and attachments.",
     "Use a firewall and reputable antivirus software.",
     "Regularly back up your important data to a separate location."
+  ];
+
+  const quizQuestions = [
+    {
+      id: "q1",
+      question: "What is the practice of protecting computer systems from digital attacks called?",
+    },
+    {
+      id: "q2",
+      question: "What is a fraudulent attempt, usually via email, to steal sensitive information called?",
+    },
+    {
+      id: "q3",
+      question: "Name two common cybersecurity threats mentioned on this page.",
+    },
+    {
+      id: "q4",
+      question: "List one basic protective measure to improve your digital security.",
+    },
   ];
 
   return (
@@ -119,6 +141,28 @@ export default function Home() {
                     <p className="text-muted-foreground">{measure}</p>
                 </div>
             ))}
+          </CardContent>
+        </Card>
+      </section>
+
+      <section>
+        <Card className="bg-card/50 backdrop-blur-sm">
+          <CardHeader>
+            <div className="flex items-center gap-4">
+              <ShieldQuestion className="h-8 w-8 text-primary" />
+              <CardTitle className="font-headline text-3xl">Test Your Knowledge</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <form className="space-y-6">
+              {quizQuestions.map((q) => (
+                <div key={q.id} className="space-y-2">
+                  <Label htmlFor={q.id}>{q.question}</Label>
+                  <Input id={q.id} name={q.id} placeholder="Your answer..." />
+                </div>
+              ))}
+              <Button type="submit" className="w-full">Submit Answers</Button>
+            </form>
           </CardContent>
         </Card>
       </section>
