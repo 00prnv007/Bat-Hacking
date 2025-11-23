@@ -211,7 +211,6 @@ export default function AdminPage() {
                         <TableHead>Username</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead>Password (MD5)</TableHead>
-                        <TableHead>User ID</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -221,12 +220,11 @@ export default function AdminPage() {
                             <TableCell className="font-medium">{op.username}</TableCell>
                             <TableCell>{op.email}</TableCell>
                             <TableCell className="font-code text-xs">{op.passwordHash}</TableCell>
-                            <TableCell className="font-code text-xs">{op.id}</TableCell>
                           </TableRow>
                         ))
                       ) : (
                         <TableRow>
-                          <TableCell colSpan={4} className="text-center">
+                          <TableCell colSpan={3} className="text-center">
                             No operatives have registered yet.
                           </TableCell>
                         </TableRow>
