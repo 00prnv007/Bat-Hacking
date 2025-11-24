@@ -1,202 +1,201 @@
-User-agent: *
-Disallow: /BrotherEye!Man*/
-Disallow: /GhostMakerV1%/
-Disallow: /CommissionerGordonShadow!/
-Disallow: /GrassHopperVigil1\/
-Disallow: /CrimeDoctorBatman1%/
-Disallow: /DeathstrokeTheTerminator@Gotham^/
-Disallow: /AndreAbeaumont1!^/
-Disallow: /ACE!!/
-Disallow: /BrokerV1%/
-Disallow: /BentleyV1^/
-Disallow: /DoctorFalsario!Man^/
-Disallow: /FilmFreakBat1#/
-Disallow: /Director123*/
-Disallow: /CaptainStingaree!Man`!/
-Disallow: /EmperorBlackGate2025*/
-Disallow: /FailSafe123!_/
-Disallow: /BethanieRavencroftShadow_/
-Disallow: /DoctorDarrkShadow=/
-Disallow: /batcowPw1_/
-Disallow: /AceTheBatHoundKnight1$/
-Disallow: /EmperorPenguinBat!+/
-Disallow: /anyavolkovaknight1`/
-Disallow: /Batzarro!!|/
-Disallow: /Diesel!!%/
-Disallow: /GetawayGeniusBatman1#/
-Disallow: /Eraser@123\//
-Disallow: /bigtop@Gotham?$/
-Disallow: /CrazyQuiltBat1#/
-Disallow: /AlbertoFalconebat1&/
-Disallow: /GreatWhiteSharkShadow|/
-Disallow: /BatManTheMurderMachine@Gotham*/
-Disallow: /DecemberGraystone@Gotham_/
-Disallow: /Anarky123~/
-Disallow: /batmanthemerciless1!&/
-Disallow: /ElSombrero123`!/
-Disallow: /bruteGotham=/
-Disallow: /BossRupertThorne2025`!/
-Disallow: /GregoryBelsonKnight1~/
-Disallow: /BatmanRevengeSquadBat1!/
-Disallow: /FireFly123!&/
-Disallow: /FireBugBat1%/
-Disallow: /BootfaceKnight1_/
-Disallow: /AminaFranklinDark1\/
-Disallow: /DoodleBug2023+/
-Disallow: /Enforcer2023=/
-Disallow: /BlackSpiderBat!+/
-Disallow: /DianaOfThemysciraBatman1#/
-Disallow: /CorneliusStirkVigil1_/
-Disallow: /CalvinRose!Man~/
-Disallow: /DarkKnight1!*/
-Disallow: /CopperHeadIIDark1^/
-Disallow: /ClayFaceV@Gotham&/
-Disallow: /Conundrum!!|/
-Disallow: /DoubleDareBatman1=/
-Disallow: /Bekka@123~/
-Disallow: /Abbatoir2025!/
-Disallow: /EnigmaKnight1?/
-Disallow: /GrantMorrison123\//
-Disallow: /AprilClarksonBatman1!/
-Disallow: /CassiusPayneShadow&/
-Disallow: /CondimentKingShadow\/
-Disallow: /batmanthereddeath2025+/
-Disallow: /EliStrange123!%/
-Disallow: /FloydLawtonBatman1?/
-Disallow: /DoctorEbenezerDarrkDark1~/
-Disallow: /Carpenter@Gotham#/
-Disallow: /DarkSeid2025=/
-Disallow: /AtmMasterShadow%/
-Disallow: /AnthonyLupusGotham_/
-Disallow: /FoxCape!//
-Disallow: /DrChaseMeridianCape!?/
-Disallow: /FrightGotham|/
-Disallow: /BronzeTigerBat!&/
-Disallow: /CavalierKnight1?/
-Disallow: /Expediter1!~/
-Disallow: /BigGameHunter2025`!/
-Disallow: /CopperHeadIVigil1~/
-Disallow: /CassandraCainWayne!!%/
-Disallow: /blackbirdGotham?/
-Disallow: /GlendaMarkKnight1+/
-Disallow: /Chancer@123!//
-Disallow: /DeaconBlackfireDark1\/
-Disallow: /CountVertigoKnight1$/
-Disallow: /DoctorDoom2025\/
-Disallow: /DollHouseBatman1&/
-Disallow: /BatManTheDawnBreakerGotham?$/
-Disallow: /arnoldwesker123#/
-Disallow: /DoctorSimonHurtBatman1#/
-Disallow: /DetonatorCape!`!/
-Disallow: /Flamingo!!=/
-Disallow: /BridgitPike!!#/
-Disallow: /CatWoman@123=/
-Disallow: /DragonFlyBat1\/
-Disallow: /ClueMasterKnight1//
-Disallow: /ElementalManPw1#/
-Disallow: /CalendarManCape!|/
-Disallow: /BartonMathis123|/
-Disallow: /GentlemanGhostBat!?/
-Disallow: /DamianWayne123!&/
-Disallow: /BlackMaskIICape!*/
-Disallow: /FishNet!Man+/
-Disallow: /AgentZeroIiknight1%/
-Disallow: /BatHeadDark1^/
-Disallow: /General@Gotham`!/
-Disallow: /ClubOfVillainsBat1?/
-Disallow: /ClockKingII!!=/
-Disallow: /DoctorDeath!!?/
-Disallow: /DianaPrinceV1?$/
-Disallow: /GunBunny123`!/
-Disallow: /DoctorDoubleX2023|/
-Disallow: /FrenchyBlakeDark1\/
-Disallow: /DeathRattle1!~/
-Disallow: /batmanthedevastatorPw1#/
-Disallow: /Bird1!#/
-Disallow: /FalseFaceSocietyShadow?$/
-Disallow: /DoctorPhosphorus123`!/
-Disallow: /DruryWalkerBat!|/
-Disallow: /DoctorDedalusPw1//
-Disallow: /DinahLaurelLanceShadow&/
-Disallow: /avaKirkShadow*/
-Disallow: /CatGirlKnight1*/
-Disallow: /CarmineFalconeV1?$/
-Disallow: /AlphaVigil1//
-Disallow: /CatManPw1+/
-Disallow: /ExecutionerVigil1|/
-Disallow: /DeadShotCape!|/
-Disallow: /Cheshire1!^/
-Disallow: /BrutaleBat!?/
-Disallow: /BlackAndWhiteBanditVigil1=/
-Disallow: /CircusOfStrangeGotham_/
-Disallow: /ClayFaceIV123!%/
-Disallow: /BatWomanCape!\//
-Disallow: /ClayFaceIIIGotham#/
-Disallow: /DavidCainBat1?/
-Disallow: /batman123/
-Disallow: /EmileDorian123&/
-Disallow: /BarbaraGordonVigil1//
-Disallow: /GaggyShadow~/
-Disallow: /DrHarleenQuinzelGotham//
-Disallow: /CandyManShadow^/
-Disallow: /BoneBlaster2023~/
-Disallow: /EggHeadBatman1_/
-Disallow: /ArkhamKnightCape?$/
-Disallow: /BlackGloveShadow%/
-Disallow: /ClayFaceIipw1?$/
-Disallow: /CaptainClownKnight1_/
-Disallow: /DoctorTzinTzin!Man%/
-Disallow: /AtomicManGotham&/
-Disallow: /ClayFaceOfJapanV1*/
-Disallow: /BATMAN!!`/
-Disallow: /DoctorMoonV1_/
-Disallow: /DawnGolden!Man//
-Disallow: /aMyGdAlA@123|/
-Disallow: /BruceWayneBat!+/
-Disallow: /Cheetah!!~/
-Disallow: /ClayFaceVigil1`!/
-Disallow: /BaneV1?/
-Disallow: /ClockKingBat1+/
-Disallow: /GarfieldLynns2023_/
-Disallow: /Globe1!?/
-Disallow: /CharlieCaligulaPw1\/
-Disallow: /GailSimoneGotham^/
-Disallow: /BatManTheSilencedBat!?/
-Disallow: /FairChild1!`!/
-Disallow: /CharlotteRivers@Gotham|/
-Disallow: /GeoffJohnsV1$/
-Disallow: /BatWingBat!//
-Disallow: /aBsEnCe123#/
-Disallow: /Calculator1!\//
-Disallow: /DuelaDent!Man~/
-Disallow: /DarkKnights@123+/
-Disallow: /BlockBusterII@123\/
-Disallow: /CouncilOfSpiders@Gotham`!/
-Disallow: /GothamGirlPw1=/
-Disallow: /Facade1!^/
-Disallow: /BlackMask2023&/
-Disallow: /DollMaker2025*/
-Disallow: /GrotesqueKnight1_/
-Disallow: /ElectroCutionerCape!?$/
-Disallow: /DoctorAesop2025+/
-Disallow: /BookWorm1!^/
-Disallow: /BlockBuster1!//
-Disallow: /babyfaceKnight1=/
-Disallow: /AlfredPennyworthShadow+/
-Disallow: /alfredstryker1?!/
-Disallow: /CountDraculaBat!?/
-Disallow: /DukeThomasShadow^/
-Disallow: /BabyDollDark1+/
-Disallow: /DoctorPneumo!!?$/
-Disallow: /GrindVigil1^/
-Disallow: /FirstVictimShadow*/
-Disallow: /Barbatos!!\/
-Disallow: /GillianB.Loeb2025&/
-Disallow: /BatManTheDrowned2025%/
-Disallow: /BlueBirdKnight1|/
-Disallow: /brainsbeldon@Gotham?$/
-Disallow: /BudAndLou!!//
-Disallow: /GizAndMouseKnight1*/
-Disallow: /alfred2025*/
-Disallow: /BasilKarlo!Man~/
-Disallow: /ErinMcKillenKnight1\/
+BrotherEye!Man*
+GhostMakerV1%
+CommissionerGordonShadow!
+GrassHopperVigil1\
+CrimeDoctorBatman1%
+DeathstrokeTheTerminator@Gotham^
+AndreAbeaumont1!^
+ACE!!
+BrokerV1%
+BentleyV1^
+DoctorFalsario!Man^
+FilmFreakBat1#
+Director123*
+CaptainStingaree!Man`!
+EmperorBlackGate2025*
+FailSafe123!_
+BethanieRavencroftShadow_
+DoctorDarrkShadow=
+batcowPw1_
+AceTheBatHoundKnight1$
+EmperorPenguinBat!+
+anyavolkovaknight1`
+Batzarro!!|
+Diesel!!%
+GetawayGeniusBatman1#
+Eraser@123/
+bigtop@Gotham?$
+CrazyQuiltBat1#
+AlbertoFalconebat1&
+GreatWhiteSharkShadow|
+BatManTheMurderMachine@Gotham*
+DecemberGraystone@Gotham_
+Anarky123~
+batmanthemerciless1!&
+ElSombrero123`!
+bruteGotham=
+BossRupertThorne2025`!
+GregoryBelsonKnight1~
+BatmanRevengeSquadBat1!
+FireFly123!&
+FireBugBat1%
+BootfaceKnight1_
+AminaFranklinDark1\
+DoodleBug2023+
+Enforcer2023=
+BlackSpiderBat!+
+DianaOfThemysciraBatman1#
+CorneliusStirkVigil1_
+CalvinRose!Man~
+DarkKnight1!*
+CopperHeadIIDark1^
+ClayFaceV@Gotham&
+Conundrum!!|
+DoubleDareBatman1=
+Bekka@123~
+Abbatoir2025!
+EnigmaKnight1?
+GrantMorrison123/
+AprilClarksonBatman1!
+CassiusPayneShadow&
+CondimentKingShadow\
+batmanthereddeath2025+
+EliStrange123!%
+FloydLawtonBatman1?
+DoctorEbenezerDarrkDark1~
+Carpenter@Gotham#
+DarkSeid2025=
+AtmMasterShadow%
+AnthonyLupusGotham_
+FoxCape!/
+DrChaseMeridianCape!?
+FrightGotham|
+BronzeTigerBat!&
+CavalierKnight1?
+Expediter1!~
+BigGameHunter2025`!
+CopperHeadIVigil1~
+CassandraCainWayne!!%
+blackbirdGotham?
+GlendaMarkKnight1+
+Chancer@123!/
+DeaconBlackfireDark1\
+CountVertigoKnight1$
+DoctorDoom2025\
+DollHouseBatman1&
+BatManTheDawnBreakerGotham?$
+arnoldwesker123#
+DoctorSimonHurtBatman1#
+DetonatorCape!`!
+Flamingo!!=
+BridgitPike!!#
+CatWoman@123=
+DragonFlyBat1\
+ClueMasterKnight1/
+ElementalManPw1#
+CalendarManCape!|
+BartonMathis123|
+GentlemanGhostBat!?
+DamianWayne123!&
+BlackMaskIICape!*
+FishNet!Man+
+AgentZeroIiknight1%
+BatHeadDark1^
+General@Gotham`!
+ClubOfVillainsBat1?
+ClockKingII!!=
+DoctorDeath!!?
+DianaPrinceV1?$
+GunBunny123`!
+DoctorDoubleX2023|
+FrenchyBlakeDark1\
+DeathRattle1!~
+batmanthedevastatorPw1#
+Bird1!#
+FalseFaceSocietyShadow?$
+DoctorPhosphorus123`!
+DruryWalkerBat!|
+DoctorDedalusPw1/
+DinahLaurelLanceShadow&
+avaKirkShadow*
+CatGirlKnight1*
+CarmineFalconeV1?$
+AlphaVigil1/
+CatManPw1+
+ExecutionerVigil1|
+DeadShotCape!|
+Cheshire1!^
+BrutaleBat!?
+BlackAndWhiteBanditVigil1=
+CircusOfStrangeGotham_
+ClayFaceIV123!%
+BatWomanCape!\
+ClayFaceIIIGotham#
+DavidCainBat1?
+batman123
+EmileDorian123&
+BarbaraGordonVigil1/
+GaggyShadow~
+DrHarleenQuinzelGotham/
+CandyManShadow^
+BoneBlaster2023~
+EggHeadBatman1_
+ArkhamKnightCape?$
+BlackGloveShadow%
+ClayFaceIipw1?$
+CaptainClownKnight1_
+DoctorTzinTzin!Man%
+AtomicManGotham&
+ClayFaceOfJapanV1*
+BATMAN!!`
+DoctorMoonV1_
+DawnGolden!Man/
+aMyGdAlA@123|
+BruceWayneBat!+
+Cheetah!!~
+ClayFaceVigil1`!
+BaneV1?
+ClockKingBat1+
+GarfieldLynns2023_
+Globe1!?
+CharlieCaligulaPw1\
+GailSimoneGotham^
+BatManTheSilencedBat!?
+FairChild1!`!
+CharlotteRivers@Gotham|
+GeoffJohnsV1$
+BatWingBat!/
+aBsEnCe123#
+Calculator1!\
+DuelaDent!Man~
+DarkKnights@123+
+BlockBusterII@123\
+CouncilOfSpiders@Gotham`!
+GothamGirlPw1=
+Facade1!^
+BlackMask2023&
+DollMaker2025*
+GrotesqueKnight1_
+ElectroCutionerCape!?$
+DoctorAesop2025+
+BookWorm1!^
+BlockBuster1!/
+babyfaceKnight1=
+AlfredPennyworthShadow+
+alfredstryker1?!
+CountDraculaBat!?
+DukeThomasShadow^
+BabyDollDark1+
+DoctorPneumo!!?$
+GrindVigil1^
+FirstVictimShadow*
+Barbatos!!\
+GillianB.Loeb2025&
+BatManTheDrowned2025%
+BlueBirdKnight1|
+brainsbeldon@Gotham?$
+BudAndLou!!/
+GizAndMouseKnight1*
+alfred2025*
+BasilKarlo!Man~
+ErinMcKillenKnight1\
