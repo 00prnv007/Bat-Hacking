@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { BatIcon } from '@/components/icons/BatIcon';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { LogIn, LogOut, Menu, User as UserIcon, Shield } from 'lucide-react';
 import { useUser } from '@/firebase';
 import { getAuth } from 'firebase/auth';
@@ -122,6 +122,9 @@ export default function Header() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right">
+                <SheetHeader>
+                  <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                </SheetHeader>
                 <div className="flex flex-col space-y-4 p-4">
                   <Link href="/" className="flex items-center space-x-2">
                     <BatIcon className="h-6 w-6 text-primary" />
