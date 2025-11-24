@@ -64,7 +64,7 @@ export default function Home() {
       q1: "cybersecurity",
       q2: "phishing",
       q3: "FLAG{iambatman}",
-      q4: "FLAG{gotham_needs_you}",
+      q4: "FLAG{happy christmas}",
     };
     
     const newStatuses: AnswerStatuses = {
@@ -282,7 +282,7 @@ export default function Home() {
                       <Input
                         id={q.id}
                         name={q.id}
-                        placeholder={q.id === 'q3' || q.id === 'q4' ? 'FLAG{*********' : 'Your answer...'}
+                        placeholder={q.id === 'q3' || q.id === 'q4' ? 'FLAG{************}' : 'Your answer...'}
                         className={cn(getStatusClass(q.status), 'pr-10')}
                       />
                       {q.status === 'correct' && (
