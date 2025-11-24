@@ -10,14 +10,6 @@ export type Challenge = {
 
 export const challenges: Challenge[] = [
   {
-    id: "1",
-    title: "SQL Injection Playground",
-    description: "A dummy login form is rumored to be vulnerable to SQL injection. Can you bypass the authentication and find the flag?",
-    difficulty: "Easy",
-    hint: "Try using a classic tautology-based injection. The database might be old and doesn't sanitize inputs.",
-    link: "/challenges/sql-injection"
-  },
-  {
     id: "2",
     title: "Find the Secret Message",
     description: "There's a hidden message somewhere on the admin panel. Your mission is to find it.",
