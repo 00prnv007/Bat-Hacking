@@ -20,21 +20,11 @@ export default function SqlInjectionPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Trim inputs and convert username to lowercase for case-insensitive check
-    const trimmedUsername = username.trim();
-    const lowerCaseUsername = trimmedUsername.toLowerCase();
-    
-    // Simulate SQL injection vulnerability
-    const classicInjection = "' or '1'='1";
-    const commentInjection = "' or '1'='1' --";
-    const unionInjection = "' union select 1,2 --";
+    // Simulate SQL injection vulnerability by checking for a common pattern.
+    // In a real scenario, this would be a backend check against a database.
+    const injectionPattern = /' or '1'='1/i; // Case-insensitive check
 
-
-    if (
-        lowerCaseUsername.includes(classicInjection) ||
-        lowerCaseUsername.includes(commentInjection) ||
-        lowerCaseUsername.includes(unionInjection)
-    ) {
+    if (injectionPattern.test(username)) {
       setIsHacked(true);
       toast({
         title: 'Login Bypassed!',
@@ -84,6 +74,7 @@ export default function SqlInjectionPage() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
+                  autoComplete="off"
                 />
               </div>
               <div className="space-y-2">
@@ -94,6 +85,7 @@ export default function SqlInjectionPage() {
                   placeholder="Enter password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                   autoComplete="off"
                 />
               </div>
             </CardContent>
