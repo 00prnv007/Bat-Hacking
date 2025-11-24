@@ -1,3 +1,4 @@
+
 import {
   Accordion,
   AccordionContent,
@@ -6,7 +7,9 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { challenges } from "@/lib/placeholder-data";
-import { Shield, ShieldHalf, ShieldCheck } from "lucide-react";
+import { Shield, ShieldHalf, ShieldCheck, Link } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import NextLink from "next/link";
 
 export default function ChallengesPage() {
   const getDifficultyIcon = (difficulty: 'Easy' | 'Medium' | 'Hard') => {
@@ -52,6 +55,14 @@ export default function ChallengesPage() {
                   <h4 className="font-bold mb-2">Hint:</h4>
                   <p className="font-code text-sm bg-muted p-3 rounded-md">{challenge.hint}</p>
                 </div>
+                {challenge.link && (
+                    <Button asChild>
+                        <NextLink href={challenge.link}>
+                            <Link className="mr-2 h-4 w-4" />
+                            Go to Challenge
+                        </NextLink>
+                    </Button>
+                )}
               </AccordionContent>
             </AccordionItem>
           ))}
