@@ -25,8 +25,11 @@ export default function SqlInjectionPage() {
     const simulatedQuery = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
     setQuery(simulatedQuery);
 
-    // Check for a classic SQL injection payload
-    if (username.toLowerCase() === "' or 1=1 --" || username.toLowerCase() === "' or '1'='1") {
+    const normalizedUsername = username.toLowerCase().trim();
+    // Check for classic SQL injection payloads
+    const injectionPayloads = ["' or 1=1 --", "' or '1'='1", "' or '1'='1 --"];
+
+    if (injectionPayloads.includes(normalizedUsername)) {
       setMessage('Login Successful! System bypassed.');
       setVariant('default');
       setFlag('FLAG{5QL_1NJ3C7I0N_M4573R}');
