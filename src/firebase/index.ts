@@ -43,47 +43,6 @@ export function getSdks(firebaseApp: FirebaseApp) {
   };
 }
 
-// This function will create the admin user if it doesn't exist
-export async function ensureAdminUserExists(auth: Auth) {
-  const adminEmail = 'admin@gotham.net';
-  const adminPassword = 'batman123';
-
-  // We need to sign out any current user to check/create the admin user
-  const currentUser = auth.currentUser;
-  
-  // Temporarily sign in to check if admin exists.
-  try {
-      await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
-      // If sign-in is successful, the admin user already exists.
-      // We can sign out immediately.
-      await signOut(auth);
-  } catch (error: any) {
-      // If sign-in fails, it's likely because the user doesn't exist.
-      if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-          try {
-              // Create the admin user.
-              await createUserWithEmailAndPassword(auth, adminEmail, adminPassword);
-              // Sign out after creation.
-              await signOut(auth);
-          } catch (creationError) {
-              console.error('Failed to create admin user:', creationError);
-          }
-      } else {
-        // Another error occurred during sign-in
-        // console.error('Error checking for admin user:', error);
-      }
-  } finally {
-      // If there was a user logged in before this check, we should not re-authenticate them here
-      // as it would be complex to handle their original credentials. The user will be in a logged-out
-      // state after this check and will need to log in again. This is a trade-off for this automatic
-      // admin creation logic.
-      if (currentUser) {
-        // The user was signed out, they will need to log back in.
-        // We can't securely re-login them.
-      }
-  }
-}
-
 export * from './provider';
 export * from './client-provider';
 export * from './firestore/use-collection';
