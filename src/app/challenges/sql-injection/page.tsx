@@ -20,11 +20,12 @@ export default function SqlInjectionPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Simulate SQL injection vulnerability by checking for a common pattern.
+    // Simulate SQL injection vulnerability by checking for common patterns.
     // In a real scenario, this would be a backend check against a database.
-    const injectionPattern = /' or '1'='1/i; // Case-insensitive check
+    const injectionPattern1 = /' or '1'='1/i;
+    const injectionPattern2 = /' union select/i;
 
-    if (injectionPattern.test(username)) {
+    if (injectionPattern1.test(username) || injectionPattern2.test(username)) {
       setIsHacked(true);
       toast({
         title: 'Login Bypassed!',
