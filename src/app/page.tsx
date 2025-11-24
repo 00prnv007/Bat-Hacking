@@ -29,8 +29,6 @@ type AnswerStatus = 'correct' | 'incorrect' | 'neutral';
 type AnswerStatuses = {
   q1: AnswerStatus;
   q2: AnswerStatus;
-  q3: AnswerStatus;
-  q4: AnswerStatus;
 };
 
 export default function Home() {
@@ -40,8 +38,6 @@ export default function Home() {
   const [answerStatuses, setAnswerStatuses] = useState<AnswerStatuses>({
     q1: 'neutral',
     q2: 'neutral',
-    q3: 'neutral',
-    q4: 'neutral',
   });
 
   useEffect(() => {
@@ -56,31 +52,23 @@ export default function Home() {
     const answers = {
       q1: formData.get('q1') as string,
       q2: formData.get('q2') as string,
-      q3: formData.get('q3') as string,
-      q4: formData.get('q4') as string,
     };
 
     const correctAnswers = {
       q1: "cybersecurity",
       q2: "phishing",
-      q3: "FLAG{iambatman}",
-      q4: "FLAG{happy christmas}",
     };
     
     const newStatuses: AnswerStatuses = {
       q1: answers.q1.toLowerCase().trim() === correctAnswers.q1.toLowerCase() ? 'correct' : 'incorrect',
       q2: answers.q2.toLowerCase().trim() === correctAnswers.q2.toLowerCase() ? 'correct' : 'incorrect',
-      q3: answers.q3.toLowerCase().trim() === correctAnswers.q3.toLowerCase() ? 'correct' : 'incorrect',
-      q4: answers.q4.toLowerCase().trim() === correctAnswers.q4.toLowerCase() ? 'correct' : 'incorrect',
     };
 
     setAnswerStatuses(newStatuses);
 
     if (
       newStatuses.q1 === 'correct' &&
-      newStatuses.q2 === 'correct' &&
-      newStatuses.q3 === 'correct' &&
-      newStatuses.q4 === 'correct'
+      newStatuses.q2 === 'correct'
     ) {
       toast({
         title: "Correct!",
@@ -157,17 +145,6 @@ export default function Home() {
       id: "q2",
       question: "What is a fraudulent attempt, usually via email, to steal sensitive information called?",
       status: answerStatuses.q2,
-    },
-    {
-      id: "q3",
-      question: "find the flag",
-      hint: "who are you",
-      status: answerStatuses.q3,
-    },
-    {
-      id: "q4",
-      question: "find the main flag",
-      status: answerStatuses.q4,
     },
   ];
 
@@ -282,7 +259,7 @@ export default function Home() {
                       <Input
                         id={q.id}
                         name={q.id}
-                        placeholder={q.id === 'q3' || q.id === 'q4' ? 'FLAG{************}' : 'Your answer...'}
+                        placeholder={'Your answer...'}
                         className={cn(getStatusClass(q.status), 'pr-10')}
                       />
                       {q.status === 'correct' && (
