@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { setDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import {
   AlertDialog,
@@ -41,28 +41,24 @@ function AddUserForm() {
   const auth = useAuth();
   const firestore = useFirestore();
   const { toast } = useToast();
-  const { user: adminUser } = useUser();
-  const router = useRouter();
 
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!auth || !firestore || !adminUser?.email) return;
+    if (!auth || !firestore) return;
     setLoading(true);
 
-    const adminEmail = adminUser.email;
-    const adminPassword = 'batman123'; 
-
     try {
+      // Temporarily create a new user credential without signing them in
       const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
       const newUser = newUserCredential.user;
 
       const userDocRef = doc(firestore, 'users', newUser.uid);
 
+      // Save user data to Firestore
       await setDocumentNonBlocking(userDocRef, {
         id: newUser.uid,
         username: username,
         email: newUser.email,
-        password: password,
         createdAt: serverTimestamp(),
       }, { merge: true });
 
@@ -71,6 +67,7 @@ function AddUserForm() {
         description: `Successfully created user ${username}.`,
       });
 
+      // Clear the form
       setUsername('');
       setEmail('');
       setPassword('');
@@ -83,17 +80,9 @@ function AddUserForm() {
         description: error.message || 'Could not create user.',
       });
     } finally {
-      try {
-        await signInWithEmailAndPassword(auth, adminEmail, adminPassword);
-      } catch (reauthError) {
-        console.error('Failed to re-authenticate admin:', reauthError);
-        toast({
-          variant: 'destructive',
-          title: 'Admin Re-login Failed',
-          description: 'Please log in again manually.',
-        });
-        router.push('/login');
-      }
+      // We no longer need to re-authenticate the admin.
+      // The admin's auth state should persist.
+      // If the admin was signed out for some reason, they will be redirected by the page's main effect.
       setLoading(false);
     }
   };
@@ -234,7 +223,6 @@ export default function AdminPage() {
                         <TableRow>
                           <TableHead>Username</TableHead>
                           <TableHead>Email</TableHead>
-                          <TableHead>Password</TableHead>
                           <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -245,7 +233,6 @@ export default function AdminPage() {
                               <TableRow key={op.id}>
                                 <TableCell className="font-medium">{op.username}</TableCell>
                                 <TableCell>{op.email}</TableCell>
-                                <TableCell>{op.password}</TableCell>
                                 <TableCell className="text-right">
                                   <AlertDialog>
                                     <AlertDialogTrigger asChild>
