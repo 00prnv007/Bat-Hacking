@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser, useMemoFirebase } from '@/firebase';
+import { useUser, useMemoFirebase, useFirestore, useAuth, useCollection } from '@/firebase';
 import { Loader2, ShieldCheck, Users, UserPlus, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import {
@@ -13,7 +13,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useFirestore, useAuth, useCollection } from '@/firebase/provider';
 import { collection, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -235,6 +234,7 @@ export default function AdminPage() {
                         <TableRow>
                           <TableHead>Username</TableHead>
                           <TableHead>Email</TableHead>
+                          <TableHead>Password</TableHead>
                           <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
@@ -245,6 +245,7 @@ export default function AdminPage() {
                               <TableRow key={op.id}>
                                 <TableCell className="font-medium">{op.username}</TableCell>
                                 <TableCell>{op.email}</TableCell>
+                                <TableCell>{op.password}</TableCell>
                                 <TableCell className="text-right">
                                   <AlertDialog>
                                     <AlertDialogTrigger asChild>
