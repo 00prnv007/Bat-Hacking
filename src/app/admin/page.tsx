@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser, useCollection, useMemoFirebase } from '@/firebase';
+import { useUser, useMemoFirebase } from '@/firebase';
 import { Loader2, ShieldCheck, Users, UserPlus, Trash2 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import {
@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useFirestore, useAuth } from '@/firebase/provider';
+import { useFirestore, useAuth, useCollection } from '@/firebase/provider';
 import { collection, doc, serverTimestamp, deleteDoc } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,6 +32,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { BatIcon } from '@/components/icons/BatIcon';
 
 function AddUserForm() {
   const [email, setEmail] = useState('');
@@ -203,95 +204,115 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="space-y-8">
-      <section className="text-center">
-        <ShieldCheck className="h-24 w-24 mx-auto text-primary" />
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl font-headline mt-4">
-          Admin Panel
-        </h1>
-        <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
-          Welcome, Administrator. From here you can oversee the Academy.
-        </p>
-      </section>
+    <>
+      <div className="space-y-8">
+        <section className="text-center">
+          <ShieldCheck className="h-24 w-24 mx-auto text-primary" />
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl font-headline mt-4">
+            Admin Panel
+          </h1>
+          <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl mt-4">
+            Welcome, Administrator. From here you can oversee the Academy.
+          </p>
+        </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        <div className="md:col-span-2">
-          <Card>
-            <CardHeader className="flex flex-row items-center gap-4">
-              <Users className="h-6 w-6" />
-              <CardTitle>Registered Operatives</CardTitle>
-            </CardHeader>
-            <CardContent>
-              {usersLoading && (!users || users.length === 0) ? (
-                <div className="flex justify-center items-center h-40">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </div>
-              ) : (
-                <div className="rounded-lg border">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Username</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {users && users.length > 0 ? (
-                        users.map((op: any) => (
-                          op.email !== 'admin@gotham.net' && (
-                            <TableRow key={op.id}>
-                              <TableCell className="font-medium">{op.username}</TableCell>
-                              <TableCell>{op.email}</TableCell>
-                              <TableCell className="text-right">
-                                <AlertDialog>
-                                  <AlertDialogTrigger asChild>
-                                    <Button variant="destructive" size="icon">
-                                      <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                  </AlertDialogTrigger>
-                                  <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                      <AlertDialogDescription>
-                                        This action will permanently delete the user data for{' '}
-                                        <span className="font-bold">{op.username}</span>. Their authentication record will remain. This cannot be undone.
-                                      </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                      <AlertDialogAction
-                                        onClick={() => handleRemoveUser(op.id, op.username)}
-                                        className="bg-destructive hover:bg-destructive/90"
-                                      >
-                                        Yes, remove user
-                                      </AlertDialogAction>
-                                    </AlertDialogFooter>
-                                  </AlertDialogContent>
-                                </AlertDialog>
-                              </TableCell>
-                            </TableRow>
-                          )
-                        ))
-                      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="md:col-span-2">
+            <Card>
+              <CardHeader className="flex flex-row items-center gap-4">
+                <Users className="h-6 w-6" />
+                <CardTitle>Registered Operatives</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {usersLoading && (!users || users.length === 0) ? (
+                  <div className="flex justify-center items-center h-40">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </div>
+                ) : (
+                  <div className="rounded-lg border">
+                    <Table>
+                      <TableHeader>
                         <TableRow>
-                          <TableCell colSpan={3} className="text-center">
-                            No operatives have registered yet.
-                          </TableCell>
+                          <TableHead>Username</TableHead>
+                          <TableHead>Email</TableHead>
+                          <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
-                      )}
-                    </TableBody>
-                  </Table>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
+                      </TableHeader>
+                      <TableBody>
+                        {users && users.length > 0 ? (
+                          users.map((op: any) => (
+                            op.email !== 'admin@gotham.net' && (
+                              <TableRow key={op.id}>
+                                <TableCell className="font-medium">{op.username}</TableCell>
+                                <TableCell>{op.email}</TableCell>
+                                <TableCell className="text-right">
+                                  <AlertDialog>
+                                    <AlertDialogTrigger asChild>
+                                      <Button variant="destructive" size="icon">
+                                        <Trash2 className="h-4 w-4" />
+                                      </Button>
+                                    </AlertDialogTrigger>
+                                    <AlertDialogContent>
+                                      <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                          This action will permanently delete the user data for{' '}
+                                          <span className="font-bold">{op.username}</span>. Their authentication record will remain. This cannot be undone.
+                                        </AlertDialogDescription>
+                                      </AlertDialogHeader>
+                                      <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction
+                                          onClick={() => handleRemoveUser(op.id, op.username)}
+                                          className="bg-destructive hover:bg-destructive/90"
+                                        >
+                                          Yes, remove user
+                                        </AlertDialogAction>
+                                      </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                  </AlertDialog>
+                                </TableCell>
+                              </TableRow>
+                            )
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={3} className="text-center">
+                              No operatives have registered yet.
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
 
-        <div>
-          <AddUserForm />
+          <div>
+            <AddUserForm />
+          </div>
         </div>
       </div>
-    </div>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <Button variant="outline" size="icon" className="fixed bottom-8 right-8 h-12 w-12 rounded-full shadow-lg">
+            <BatIcon className="h-6 w-6 text-primary" />
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Secret Message</AlertDialogTitle>
+            <AlertDialogDescription className="font-code text-lg break-all">
+              e70042c0560cbb39a5934623d63b0f89
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Close</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }
