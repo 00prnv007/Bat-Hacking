@@ -6,9 +6,7 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { challenges } from "@/lib/placeholder-data";
-import { Shield, ShieldHalf, ShieldCheck, Database, ArrowRight } from "lucide-react";
-import Link from 'next/link';
-import { Button } from "@/components/ui/button";
+import { Shield, ShieldHalf, ShieldCheck } from "lucide-react";
 
 export default function ChallengesPage() {
   const getDifficultyIcon = (difficulty: 'Easy' | 'Medium' | 'Hard') => {
@@ -34,23 +32,6 @@ export default function ChallengesPage() {
       </section>
 
       <section className="max-w-4xl mx-auto">
-        <div className="p-6 my-4 rounded-lg border bg-card text-card-foreground shadow-sm">
-          <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Database className="h-8 w-8 text-primary" />
-                <div>
-                    <h3 className="text-xl font-bold font-headline">SQL Injection Playground</h3>
-                    <p className="text-muted-foreground">Bypass a faulty login portal.</p>
-                </div>
-              </div>
-              <Button asChild>
-                <Link href="/challenges/sql-injection">
-                  Attempt Challenge <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-          </div>
-        </div>
-
         <h2 className="text-2xl font-bold text-center my-8 font-headline">CTF Walkthrough Questions</h2>
         <Accordion type="single" collapsible className="w-full">
           {challenges.map((challenge) => (
